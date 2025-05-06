@@ -1,1 +1,24 @@
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('/static/fonts/DungGeunMo.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import 'tailwindcss';
+@plugin "daisyui" { themes: light --default, dark --prefersdark; }
+  
+
+@layer base {
+  body {
+    @apply bg-base-300;
+    font-family: 'DungGeunMo', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

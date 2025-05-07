@@ -90,54 +90,15 @@
                     <ul class="space-y-2 overflow-y-auto max-h-64 pr-2">
                         {#each $todos.filter(todo => !todo.completed) as todo (todo.id)}
                             <li class="flex items-center gap-2 bg-white rounded-lg shadow p-3">
-                                <input
-                                    type="checkbox"
-                                    checked={todo.completed}
-                                    on:change={() => toggleTodo(todo.id)}
-                                />
+                                <input type="checkbox" checked={todo.completed} on:change={() => toggleTodo(todo.id)}/>
                                 <span>{todo.text}</span>
-                                <button
-                                    on:click={() => deleteTodo(todo.id)}
-                                    class="ml-auto text-red-500 hover:underline"
-                                >
+                                <button on:click={() => deleteTodo(todo.id)} class="ml-auto text-red-500 hover:underline">
                                     삭제
                                 </button>
                             </li>
                         {/each}
                         {#if $todos.filter(todo => !todo.completed).length === 0}
                             <li class="text-gray-400 text-sm text-center">할 일이 없습니다.</li>
-                        {/if}
-                    </ul>
-                </div>
-            {/if}
-        </div>
-        <!-- 완료된 할 일 드롭다운 -->
-        <div class="bg-white rounded-lg shadow">
-            <button class="w-full flex items-center gap-2 px-4 py-3 font-semibold text-left rounded-t-lg hover:bg-gray-100 transition" on:click={() => openDone = !openDone}>
-                <svg class="w-5 h-5 transition-transform" style:transform={openDone ? 'rotate(90deg)' : 'rotate(0deg)'} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                <span>완료된 할 일</span>
-            </button>
-            {#if openDone}
-                <div class="bg-gray-100 rounded-b-lg px-2 py-2">
-                    <ul class="space-y-2 overflow-y-auto max-h-64 pr-2">
-                        {#each $todos.filter(todo => todo.completed) as todo (todo.id)}
-                            <li class="flex items-center gap-2 bg-white rounded-lg shadow p-3">
-                                <input
-                                    type="checkbox"
-                                    checked={todo.completed}
-                                    on:change={() => toggleTodo(todo.id)}
-                                />
-                                <span class="line-through text-gray-400">{todo.text}</span>
-                                <button
-                                    on:click={() => deleteTodo(todo.id)}
-                                    class="ml-auto text-red-500 hover:underline"
-                                >
-                                    삭제
-                                </button>
-                            </li>
-                        {/each}
-                        {#if $todos.filter(todo => todo.completed).length === 0}
-                            <li class="text-gray-400 text-sm text-center">완료된 할 일이 없습니다.</li>
                         {/if}
                     </ul>
                 </div>

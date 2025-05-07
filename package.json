@@ -27,6 +27,7 @@
 		"@types/node": "^22",
 		"@types/tailwindcss": "^3.0.11",
 		"autoprefixer": "^10.4.21",
+		"cally": "^0.8.0",
 		"daisyui": "^5.0.35",
 		"drizzle-kit": "^0.30.2",
 		"eslint": "^9.18.0",
@@ -46,6 +47,7 @@
 	},
 	"dependencies": {
 		"drizzle-orm": "^0.40.0",
+		"pnu-webbasic-term": "file:",
 		"postgres": "^3.4.5"
 	}
 }

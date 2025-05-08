@@ -1,0 +1,2 @@
+ALTER TABLE "todo" ALTER COLUMN "id" SET DEFAULT 'bd515c43-2077-46b9-a393-97b1ca0ad87f';--> statement-breakpoint
+ALTER TABLE "user" ALTER COLUMN "id" SET DEFAULT '98d1feed-9492-4090-877a-1dbbf847bd8a';

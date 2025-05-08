@@ -1,64 +1,8 @@
-<script lang="ts">
-    import { onMount } from "svelte";
-    import { writable } from "svelte/store";
-
-    interface Todo {
-        id: number;
-        text: string;
-        completed: boolean;
-    }
-
-    const todos = writable<Todo[]>([]);
-    let newTodo = "";
-
-    let openTodo = true;
-    let openDone = false;
-
-    function addTodo() {
-        if (newTodo.trim()) {
-            todos.update(($todos) => [
-                ...$todos,
-                {
-                    id: Date.now(),
-                    text: newTodo,
-                    completed: false,
-                },
-            ]);
-            newTodo = "";
-        }
-    }
-
-    function toggleTodo(id: number) {
-        todos.update(($todos) =>
-            $todos.map((todo) =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            )
-        );
-    }
-
-    function deleteTodo(id: number) {
-        todos.update(($todos) => $todos.filter((todo) => todo.id !== id));
-    }
-
-    onMount(() => {
-        console.log("Todo page mounted");
-        // 테스트용 할 일 100개(미완료)
-        const testTodos = Array.from({ length: 100 }, (_, i) => ({
-            id: Date.now() + i,
-            text: `테스트 할 일 ${i + 1}`,
-            completed: false,
-        }));
-        // 테스트용 완료된 할 일 100개
-        const testDones = Array.from({ length: 100 }, (_, i) => ({
-            id: Date.now() + 100 + i,
-            text: `테스트 완료된 일 ${i + 1}`,
-            completed: true,
-        }));
-        todos.set([...testTodos, ...testDones]);
-    });
+<!-- <script lang="ts">
+    import { todos } from './+page';
 </script>
 
-<div class="flex flex-col h-[70vh] max-h-[70vh]">
+<div class="flex flex-col min-w[500px] w-[70vw] h-[100vh] max-h-[120vh]">
     <h1 class="text-xl font-bold mb-4">Todo List</h1>
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <div class="flex gap-2">
@@ -79,7 +23,6 @@
     </div>
 
     <div class="rounded-lg p-4 flex-1">
-        <!-- 할 일 드롭다운 -->
         <div class="mb-6 bg-white rounded-lg shadow">
             <button class="w-full flex items-center gap-2 px-4 py-3 font-semibold text-left rounded-t-lg hover:bg-gray-100 transition" on:click={() => openTodo = !openTodo}>
                 <svg class="w-5 h-5 transition-transform" style:transform={openTodo ? 'rotate(90deg)' : 'rotate(0deg)'} fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -106,4 +49,4 @@
         </div>
     </div>
 </div>
-
+ -->

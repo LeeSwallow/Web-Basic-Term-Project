@@ -1,20 +1,45 @@
 <script lang="ts">
 	import '../app.css';
-	let { children } = $props();
+  import { user } from '$lib/store/sessionStore';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  let { children } = $props();
+  let isLogin = $state(false);
+  onMount(() => {
+    user.subscribe((value) => {
+      isLogin = value !== null;
+    });
+  });
 </script>
 
 <header class="header">
-	<div class="text-2xl font-bold">
-		Pomodoro Todo
-	</div>
+	<button class="btn btn-ghost btn-square text-2xl font-bold w-60 text-center" onclick={() => {
+		goto('/');
+	}}>Pomodoro Todo
+	</button>
+
+  {#if isLogin}
+    <div class="text-2xl font-bold">{$user?.name}</div>
+  {:else}
+    <div>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
+      goto('/auth/login');
+    }}>로그인</button>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
+      goto('/auth/signup');
+    }}>회원가입</button>
+    </div>
+  {/if}
+
 </header>
 
+<article class="content">
+	{@render children()}
+</article>
 <div class="bg"></div>
 <div class="bg bg2"></div>
 <div class="bg bg3"></div>
-<div class="content">
-	{@render children()}
-</div>
+
 
 <style lang="postcss">
 	@reference  'tailwindcss';
@@ -38,12 +63,13 @@
   border-radius:.25em;
   box-shadow:0 0 .25em rgba(0,0,0,.25);
   box-sizing:border-box;
-  margin-top: 4vh;
-  min-height: 80vh;
-  min-width: 50vw;
   left:50%;
-  top:50%;
-  position:fixed;
+  top:60%;
+  margin: 4vh auto;
+  min-height: 50vh;
+  padding: 1rem;
+
+  position:absolute;
   text-align:center;
   transform:translate(-50%, -50%);
 }

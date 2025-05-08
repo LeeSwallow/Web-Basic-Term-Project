@@ -1,7 +1,7 @@
 import { pgTable, uuid, text, boolean, timestamp, integer, varchar } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('user', {
-	id: uuid('id').primaryKey().default(crypto.randomUUID()),
+	id: uuid('id').primaryKey(),
 	name: text('name').notNull(),
 	email: text('email').notNull(),
 	password: text('password').notNull(),
@@ -10,7 +10,7 @@ export const users = pgTable('user', {
 });
 
 export const todos = pgTable('todo', {
-	id: uuid('id').primaryKey().default(crypto.randomUUID()),
+	id: uuid('id').primaryKey(),
 	content: text('content').notNull(),
 	completed: boolean('completed').notNull().default(false),
 	hidden: boolean('hidden').notNull().default(false),

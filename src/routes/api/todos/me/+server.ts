@@ -18,7 +18,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         return json({ error: "Unauthorized" }, { status: 401 });
     }
     const body = await request.json();
-    const newTodo = await db.insert(todos).values({ ...body, userId: user_id });
+    const id = crypto.randomUUID();
+    const newTodo = await db.insert(todos).values({ id, ...body, userId: user_id });
     return json(newTodo);
 };
 

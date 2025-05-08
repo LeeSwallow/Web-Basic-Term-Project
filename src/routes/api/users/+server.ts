@@ -7,7 +7,9 @@ import { users } from "$lib/server/db/schema";
 // 회원가입
 export const POST: RequestHandler = async ({ request }) => {
     const { name, email, password } = await request.json();
-    const user = await db.insert(users).values({name, email, password });
+    const id = crypto.randomUUID();
+    console.log(id);
+    const user = await db.insert(users).values({id, name, email, password });
     return new Response(JSON.stringify(user));
 };
 

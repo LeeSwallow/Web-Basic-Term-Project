@@ -1,6 +1,7 @@
 <script lang="ts">
     import { hashPassword } from '$lib/client/auth';
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
     let loginForm : {
         name: string,
         email: string,
@@ -74,6 +75,7 @@
         if (response.ok) {
             const data = await response.json();
             console.log(data);
+            goto('/auth/login');
         } else {
             errors.push('회원가입에 실패했습니다.');
         }
@@ -120,9 +122,9 @@
             <button type="submit" class="flex btn btn-primary w-full" onclick={() => signup()}>회원가입</button>
         </div>
     </form>
-    </section>
+</section>
     
-    <style lang="postcss">
+<style lang="postcss">
     @reference  'tailwindcss';
     @plugin "daisyui" { themes: light --default, dark --prefersdark; }
     

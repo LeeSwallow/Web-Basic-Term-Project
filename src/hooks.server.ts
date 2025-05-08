@@ -1,5 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
-import * as auth from '$lib/server/auth.js';
+import * as auth from '$lib/server/auth';
 const publicRoutes = ['/auth', '/'];
 const apiPublicRoutes = [{ path: '/api/users', methods: ['POST']}];
 

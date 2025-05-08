@@ -1,14 +1,21 @@
 <script lang="ts">
 	import '../app.css';
-  import { user } from '$lib/store/sessionStore';
+  import { userStore } from '$lib/store/userStore';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import type { User } from '$lib/store/userStore';
+
   let { children } = $props();
   let isLogin = $state(false);
+ 
+  let user = $state<User | null>(null);
+ 
   onMount(() => {
-    user.subscribe((value) => {
+    userStore.subscribe((value) => {
       isLogin = value !== null;
+      user = value;
     });
+
   });
 </script>
 
@@ -19,7 +26,10 @@
 	</button>
 
   {#if isLogin}
-    <div class="text-2xl font-bold">{$user?.name}</div>
+    <div class="text-2xl font-bold">{user?.name}</div>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
+      goto('/auth/logout');
+    }}>로그아웃</button>S
   {:else}
     <div>
     <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {

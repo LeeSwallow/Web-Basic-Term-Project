@@ -7,13 +7,13 @@
         email: string,
         password: string,
         password2: string,
-    } = {
+    } = $state({
         name: "",
         email: "",
         password: "",
         password2: "",
-    };
-    let errors: string[] = [];
+    });
+    let errors: string[] = $state([]);
 
     type InputStyle = 'input-neutral' | 'input-error';
 
@@ -77,7 +77,14 @@
             console.log(data);
             goto('/auth/login');
         } else {
-            errors.push('회원가입에 실패했습니다.');
+            const data = await response.json();
+            if (data?.field === "email") {
+                errors.push(data?.message);
+                changeInputStyle(document.getElementById('email') as HTMLInputElement, 'input-error');
+            } else {
+                errors.push('회원가입에 실패했습니다.');
+            }
+            console.log(errors);
         }
     }
 
@@ -90,14 +97,17 @@
 
 
 <section class="bg-base-100 p-5 w-[50vw] max-h-[100vh] flex flex-col overflow-y-auto">
-    {#if errors.length > 0}
-        <div class="alert alert-error">
-            <p>{errors[0]}</p>
-        </div>
-    {/if}
+
     <form class="flex flex-col w-full justify-between h-full space-y-4" action="#">
         <h1 class="text-2xl font-bold mb-6">사용자 회원가입</h1>
         
+        
+        {#if errors.length > 0}
+        <div class="alert alert-error">
+            <p class="text-sm text-white">{errors[0]}</p>
+        </div>
+        {/if}
+
         <div class="card bg-base-300 p-6 flex flex-col w-full space-y-4">
             <div class="flex flex-col w-full space-y-2 justify-between items-start">
                 <label for="name" class="signup-label">닉네임: </label>
@@ -119,7 +129,7 @@
         </div>
     
         <div class="flex flex-col w-full space-y-4">
-            <button type="submit" class="flex btn btn-primary w-full" onclick={() => signup()}>회원가입</button>
+            <button class="flex btn btn-primary w-full" type="button" onclick={() => signup()}>회원가입</button>
         </div>
     </form>
 </section>

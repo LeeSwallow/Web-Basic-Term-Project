@@ -1,7 +1,5 @@
 import { onMount } from 'svelte';
-import { writable } from 'svelte/store';
 
-export const todos = writable([]);
 
 onMount(() => {
     fetch('/api/todos/me')

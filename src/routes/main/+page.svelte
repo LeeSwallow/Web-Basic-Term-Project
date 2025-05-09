@@ -1,5 +1,11 @@
-<!-- <script lang="ts">
-    import { todos } from './+page';
+<script lang="ts">
+    import { onMount } from 'svelte';
+    import { page } from '$app/state';
+    let { todos } = page.data;
+
+
+
+
 </script>
 
 <div class="flex flex-col min-w[500px] w-[70vw] h-[100vh] max-h-[120vh]">
@@ -49,4 +55,3 @@
         </div>
     </div>
 </div>
- -->

@@ -84,12 +84,13 @@ onMount(() => {
 
         <div class="input-section">
 
-            <div class="flex flex-col w-full space-y-2 justify-between items-start">
-                <label for="email" class="text-sm font-bold">이메일 : </label>
+            <div class="item">
+                <label for="email" class="label">이메일 : </label>
                 <input type="email" name="email" id="email" class="w-full input input-neutral" bind:value={loginForm.email} placeholder="name@company.com" required>
             </div>
-            <div class="flex flex-col w-full space-y-2 justify-between items-start">
-            <label for="password" class="text-sm font-bold">비밀번호 : </label>
+            
+            <div class="item">
+                <label for="password" class="label">비밀번호 : </label>
                 <input type="password" name="password" id="password" class="w-full input input-neutral" bind:value={loginForm.password} placeholder="••••••••" required>
             </div>
         </div>

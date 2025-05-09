@@ -82,7 +82,7 @@
 	}
 
   .content {
-  @apply bg-base-100 flex flex-col  overflow-y-auto;
+  @apply bg-base-100 overflow-y-auto;
   box-shadow:0 0 .25em rgba(0,0,0,.25);
   border-radius:.25em;
   box-sizing:border-box;
@@ -95,7 +95,6 @@
   max-height: 85vh;
   
   padding: 1rem;
-  text-align:center;
   transform:translate(-50%, -50%);
 }
   

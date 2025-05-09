@@ -18,7 +18,6 @@ export function validateSignupForm(signupForm: SignupForm): InputError[] {
     const emailError = validateEmail(signupForm.email);
     const passwordError = validatePassword(signupForm.password);
     const password2Error = validatePassword2(signupForm.password, signupForm.password2);
-
     if (nameError) errors.push(nameError);
     if (emailError) errors.push(emailError);
     if (passwordError) errors.push(passwordError);

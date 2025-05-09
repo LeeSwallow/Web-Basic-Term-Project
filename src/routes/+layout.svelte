@@ -3,19 +3,36 @@
   import { userStore } from '$lib/store/userStore';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import type { User } from '$lib/store/userStore';
+  import type { UserInfo } from '$lib/client/auth';
 
   let { children } = $props();
-  let isLogin = $state(false);
- 
-  let user = $state<User | null>(null);
- 
-  onMount(() => {
-    userStore.subscribe((value) => {
-      isLogin = value !== null;
-      user = value;
-    });
 
+  let isLogin = $state(false);
+  let user = $state<UserInfo | null>(null);
+
+  const onClickSignup = () => { goto('/auth/signup')}
+  const onClickLogin = () => { goto('/auth/login') }
+  let onClickLogout : () => void;
+
+  onMount(() => {
+    userStore.subscribe((value) => { 
+      user = (value === undefined || value === null) ? null : value;
+      isLogin = (user !== null);
+    });
+    onClickLogout = () => {
+      fetch('/api/sessions', {
+        method: 'DELETE',
+      }).then((res) => {
+        if (res.ok) {
+          userStore.set(null);
+          goto("/");
+        } else {
+          console.error(res);
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
   });
 </script>
 
@@ -26,18 +43,14 @@
 	</button>
 
   {#if isLogin}
-    <div class="text-2xl font-bold">{user?.name}</div>
-    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
-      goto('/auth/logout');
-    }}>로그아웃</button>S
+  <div class="flex items-center">
+    <div><span class="font-bold">사용자 이름:  </span> {user?.name}</div>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => onClickLogout()}>로그아웃</button>
+  </div>
   {:else}
     <div>
-    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
-      goto('/auth/login');
-    }}>로그인</button>
-    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => {
-      goto('/auth/signup');
-    }}>회원가입</button>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => onClickLogin()}>로그인</button>
+    <button class="btn btn-square btn-ghost m-1 w-20" onclick={() => onClickSignup()}>회원가입</button>
     </div>
   {/if}
 
@@ -59,7 +72,7 @@
 		@apply bg-base-100 flex justify-between items-center;
 		position: fixed;
 		width: 100%;
-		height: 8vh;
+		height: 4rem;
 		padding: 1rem;
 		top: 0;
 		left: 0;
@@ -69,17 +82,19 @@
 	}
 
   .content {
-  @apply bg-base-100;
-  border-radius:.25em;
+  @apply bg-base-100 flex flex-col  overflow-y-auto;
   box-shadow:0 0 .25em rgba(0,0,0,.25);
+  border-radius:.25em;
   box-sizing:border-box;
-  left:50%;
-  top:60%;
-  margin: 4vh auto;
-  min-height: 50vh;
-  padding: 1rem;
-
   position:absolute;
+  left:50%;
+  top:55%;
+  margin: 0 auto;
+
+  min-height: 50vh;
+  max-height: 85vh;
+  
+  padding: 1rem;
   text-align:center;
   transform:translate(-50%, -50%);
 }

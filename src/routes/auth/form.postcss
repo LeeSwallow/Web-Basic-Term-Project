@@ -1,0 +1,14 @@
+@reference 'tailwindcss';
+@plugin "daisyui" { themes: light --default, dark --prefersdark;}
+.card-section{
+    @apply bg-base-100 p-5 min-w-[350px] w-[70vw] max-w-[600px] max-h-[100vh] flex flex-col overflow-y-auto;
+}
+.form-section {
+    @apply flex flex-col w-full justify-between h-full space-y-4;
+}
+.input-section {
+    @apply card bg-base-300 p-6 flex flex-col w-full space-y-4 mb-10;
+}
+.submit-section {
+    @apply flex flex-col w-full space-y-4;
+}

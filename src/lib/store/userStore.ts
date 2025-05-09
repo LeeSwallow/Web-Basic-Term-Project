@@ -1,13 +1,9 @@
 import { writable } from "svelte/store";
+import type { UserInfo } from "$lib/client/auth";
 
-export interface User {
-    id: string;
-    name: string;
-}
+export const userStore = writable<UserInfo | null>(null);
 
-export const userStore = writable<User | null>(null);
-
-export const setUser = (newUser: User) => {
+export const setUser = (newUser: UserInfo) => {
     userStore.set(newUser);
 }
 

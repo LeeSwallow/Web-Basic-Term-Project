@@ -3,8 +3,6 @@ import { db } from "$lib/server/db";
 import { users } from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
 
-// 이 api외에는 토큰 없이 접근 불가(hooks.server.ts 참고)
-// POST /api/users
 // 회원가입
 export const POST: RequestHandler = async ({ request }) => {
     const { name, email, password } = await request.json();
@@ -18,8 +16,35 @@ export const POST: RequestHandler = async ({ request }) => {
     return new Response(JSON.stringify(user));
 };
 
-// GET /api/users
+// 회원 정보 조회
 export const GET: RequestHandler = async ({ locals }) => {
     const { user } = locals;
-    return new Response(JSON.stringify(user));
+    if (!user) {
+        return new Response(JSON.stringify({ message: "로그인이 필요합니다." }), { status: 401 });
+    }
+    const userInfo = await db.select().from(users).where(eq(users.id, user.id));
+    return new Response(JSON.stringify(userInfo));
 };
+
+
+// 회원 정보 수정
+export const PUT: RequestHandler = async ({ request, locals }) => {
+    const { user } = locals;
+    if (!user) {
+        return new Response(JSON.stringify({ message: "로그인이 필요합니다." }), { status: 401 });
+    }
+    const { name, email, password } = await request.json();
+    const userInfo = await db.update(users).set({ name, email, password }).where(eq(users.id, user.id));
+    return new Response(JSON.stringify(userInfo));
+};
+
+// 회원 정보 삭제
+export const DELETE: RequestHandler = async ({ request, locals }) => {
+    const { user } = locals;
+    if (!user) {
+        return new Response(JSON.stringify({ message: "로그인이 필요합니다." }), { status: 401 });
+    }
+    const userInfo = await db.delete(users).where(eq(users.id, user.id));
+    return new Response(JSON.stringify(userInfo));
+};  
+

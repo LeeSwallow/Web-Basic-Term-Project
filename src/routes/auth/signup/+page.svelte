@@ -96,11 +96,11 @@
 </script>
 
 
-<section class="bg-base-100 p-5 w-[50vw] max-h-[100vh] flex flex-col overflow-y-auto">
+<section class="card-section">
 
-    <form class="flex flex-col w-full justify-between h-full space-y-4" action="#">
-        <h1 class="text-2xl font-bold mb-6">사용자 회원가입</h1>
+    <form class="form-section" action="#">
         
+        <h1 class="text-2xl font-bold mb-6">사용자 회원가입</h1>
         
         {#if errors.length > 0}
         <div class="alert alert-error">
@@ -108,7 +108,7 @@
         </div>
         {/if}
 
-        <div class="card bg-base-300 p-6 flex flex-col w-full space-y-4">
+        <div class="input-section">
             <div class="flex flex-col w-full space-y-2 justify-between items-start">
                 <label for="name" class="signup-label">닉네임: </label>
                 <input type="text" name="name" id="name" class="w-full input input-neutral" bind:value={loginForm.name} required>
@@ -118,6 +118,7 @@
                 <label for="email" class="signup-label">이메일 : </label>
                 <input type="email" name="email" id="email" class="w-full input input-neutral" bind:value={loginForm.email} placeholder="name@company.com" required>
             </div>
+            
             <div class="flex flex-col w-full space-y-2 justify-between items-start">
                 <label for="password" class="signup-label">비밀번호 : </label>
                 <input type="password" name="password" id="password" class="w-full input input-neutral" bind:value={loginForm.password} placeholder="••••••••" required>
@@ -128,18 +129,12 @@
             </div>
         </div>
     
-        <div class="flex flex-col w-full space-y-4">
+        <div class="submit-section">
             <button class="flex btn btn-primary w-full" type="button" onclick={() => signup()}>회원가입</button>
         </div>
     </form>
 </section>
     
 <style lang="postcss">
-    @reference  'tailwindcss';
-    @plugin "daisyui" { themes: light --default, dark --prefersdark; }
-    
-    .signup-label {
-        @apply text-sm font-bold;
-        text-align: left;
-    }
+    @import '../form.postcss';
 </style>

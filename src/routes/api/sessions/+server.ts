@@ -1,8 +1,8 @@
 import { db } from "$lib/server/db";
-import { users } from "$lib/server/db/schema";
+import { users, session } from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
 import type { RequestHandler } from "./$types";
-import { createSession, generateSessionToken, deleteSession } from "$lib/server/auth";
+import { createSession, generateSessionToken } from "$lib/server/auth";
 // POST /api/sessions
 
 
@@ -25,8 +25,11 @@ export const POST: RequestHandler = async ({ request }) => {
 }
 
 // 로그아웃 & 세션 삭제
-export const DELETE: RequestHandler = async ({ request }) => {
-    const { sessionToken } = await request.json();
-    await deleteSession(sessionToken);
+export const DELETE: RequestHandler = async ({ locals }) => {
+    const sessionToken = locals.session?.id;
+    if (!sessionToken) {
+        return new Response(JSON.stringify({ message: "No session token" }), { status: 401 });
+    }
+    await db.delete(session).where(eq(session.id, sessionToken));
     return new Response(JSON.stringify({ message: "Logged out" }), { status: 200 });
 }
